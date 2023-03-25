@@ -76,8 +76,6 @@ tribble(
                 .protect = FALSE)
 ```
 
-&nbsp;
-
 # Other skills and achievements
 
 ## Courses
@@ -87,8 +85,9 @@ tribble(
   ~ Course, ~ Date, ~ Details,
   "Summer School on Statistical Methods for Linguistics and Psychology", "Sep 2022", "Week long workshop on multi-level modeling in R",
   "Introduction to Bayesian Data Analysis", "Jan 2023", "Four week online course on Bayesian methods including implementation in R",
-  "Google Data Analytics Certificate on Coursera", "Jun 2022", " ",
-  "Summer School on Advanced Regression Analyses", "Jul 2022", "Organised and partook in week long workshop for students of universities in Vienna and Budapest"
+  "Google Data Analytics Professional Certificate", "Jun 2022", "Data cleaning, analysing and sharing using SQL, Tableau and R",
+  "Summer School on Advanced Regression Analyses", "Jul 2022", "Organised and partook in week long workshop for students of universities in Vienna and Budapest",
+  "Junior Researcher Programme", "Jun 2019 - Aug 2020", "Year long research project on willpower beliefs and effort culminating in a Registered Report published in EJPA"
 ) %>%
  brief_entries(glue::glue("\\textbf{<Course>} \\newline <Details>", .open = "<", .close =">"), paste0(Date, "\\newline"), .protect = FALSE)
 ```

@@ -1,0 +1,104 @@
+---
+name: Georgia
+surname: Clay
+position: "PhD Candidate"
+address: "Institute of Work, Organisational and Social Psychology, Technical University Dresden"
+phone: +43670 608 4487
+email: "georgia.clay@tu-dresden.de"
+github: georgiaclay
+date: "`r format(Sys.time(), '%B %Y')`"
+profilepic: "picture.jpg"
+fontsize: 10pt
+headcolor: "414141"
+output: 
+  vitae::awesomecv:
+    page_total: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+library(tidyverse)
+library(gsheet)
+
+#install.packages("rorcid")
+#install.packages("usethis")
+```
+
+# Education 
+
+```{r education}
+gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1AL-rCEwDCLcuSC4_5eBoENKnfXpH7cjDSbAXlJ3Rc_o/edit#gid=0", sheet="Education") %>%
+  vitae::detailed_entries(what = Degree,
+                          when = Year,
+                          where = Location, 
+                          with = Institution, 
+                          why = Details)
+```
+# Teaching
+
+```{r teaching}
+gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1AL-rCEwDCLcuSC4_5eBoENKnfXpH7cjDSbAXlJ3Rc_o/edit#gid=1629311588", sheet="Teaching") %>%
+  vitae::detailed_entries(with = Course,
+                          when = Year,
+                          what = Institution,
+                          why = Details)
+```
+
+# Publications
+
+```{r publications}
+scholar::get_publications('x9BUWucAAAAJ&hl')  %>%
+  distinct(title, .keep_all = TRUE) %>%
+  transmute(bibtype = "Article", author = as.character(author),
+            title = as.character(title),
+            journaltitle = as.character(journal), year, key = row_number()) %>%
+  RefManageR::as.BibEntry() %>% 
+  RefManageR::WriteBib("clay.bib")
+bibliography_entries("clay.bib") %>%
+  arrange(factor(id, levels = c(3,4,2,1)))
+```
+
+# Talks and Presentations
+
+```{r}
+tribble(
+  ~ Talk, ~ Year,
+  "\\textbf{Clinical Social Neuroscience Unit, University of Vienna (invited talk)}", "Feb 2022",
+  "\\textbf{Department of Psychology, McGill University (invited talk)}",
+  "Mar 2022",
+  "\\textbf{Mental Effort Workshop (poster presentation)}", "Sep 2021",
+  "\\textbf{General Psychology, Friedrich-Schiller-Universität Jena (talk)}",
+  "Oct 2020"
+) %>%
+  brief_entries(what = Talk,
+                when = Year,
+                .protect = FALSE)
+```
+
+&nbsp;
+
+# Other skills and achievements
+
+## Courses
+
+```{r}
+tribble(
+  ~ Course, ~ Date, ~ Details,
+  "Summer School on Statistical Methods for Linguistics and Psychology", "Sep 2022", "Week long workshop on multi-level modeling in R",
+  "Introduction to Bayesian Data Analysis", "Jan 2023", "Four week online course on Bayesian methods including implementation in R",
+  "Google Data Analytics Certificate on Coursera", "Jun 2022", " ",
+  "Summer School on Advanced Regression Analyses", "Jul 2022", "Organised and partook in week long workshop for students of universities in Vienna and Budapest"
+) %>%
+ brief_entries(glue::glue("\\textbf{<Course>} \\newline <Details>", .open = "<", .close =">"), paste0(Date, "\\newline"), .protect = FALSE)
+```
+
+## Other skills
+
+
+\begin{itemize}
+\item Supervised Masters and Bachelors thesis projects at University of Vienna
+\item Highly proficient in R, building experiments using Inquisit (Experiment builder), running studies on Amazon Mechanical Turk and Prolific, experience with Python, MATLAB, MPlus
+\item Languages: English (Native) and German (C1)
+\end {itemize}
+
